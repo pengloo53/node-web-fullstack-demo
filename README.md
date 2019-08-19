@@ -22,3 +22,22 @@
 5. 命令行，运行 `npm run init` 新建管理员账号，然后退出命令行
 6. 命令行，运行 `npm run dev` 启动项目
 7. 浏览器，打开网址 `http://localhost:8080`，账号：90byte，密码：admin
+
+
+### 页面展示
+
+#### 登录页
+
+![](./public/images/readme/login.jpg)
+
+#### 后台首页
+
+![](./public/images/readme/index.jpg)
+
+#### 表格页
+
+![](./public/images/readme/table.jpg)
+
+#### 添加页
+
+![](./public/images/readme/add.jpg)
