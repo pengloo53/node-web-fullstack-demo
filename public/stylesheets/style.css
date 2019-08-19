@@ -1,0 +1,23 @@
+/* body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+} */
+
+.bootstrap-table .fixed-table-toolbar .bs-bars, 
+.bootstrap-table .fixed-table-toolbar .columns, 
+.bootstrap-table .fixed-table-toolbar .search {
+    margin-top: 0px;
+}
+
+.alertCustom{
+  position: absolute;
+  width: 250px;
+  left: calc(50% - 125px);
+  left: -moz-calc(50% - 125px); 
+  left: -webkit-calc(50% - 125px); 
+  z-index: 100;
+}

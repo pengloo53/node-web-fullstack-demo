@@ -1,0 +1,21 @@
+<div class="alertCustom">
+    <% if(error && error.length !== 0){ %>
+    <div class="alert alert-danger alert-dismissible text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span class=""><i class="icon fa fa-ban"></i>
+            <%- error %></span>
+    </div>
+    <% }else if(success && success.length !== 0){ %>
+    <div class="alert alert-success alert-dismissible text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span><i class="icon fa fa-check"></i>
+            <%- success %></span>
+    </div>
+    <% }else if(info && info.length !== 0){ %>
+    <div class="alert alert-info alert-dismissible text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <span><i class="icon fa fa-info"></i>
+            <%- info %></span>
+    </div>
+    <% } %>
+</div>

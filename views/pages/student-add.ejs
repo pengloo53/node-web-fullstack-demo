@@ -1,0 +1,182 @@
+<% include ../layout/head.ejs %>
+<!-- bootstrap-fileinput -->
+<link rel="stylesheet" href="/bootstrap-fileinput/css/fileinput.min.css">
+<!-- custom -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+
+<% include ../layout/header.ejs %>
+<% include ../layout/sidebar.ejs %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1><%= pageInfo.title %><small><%= pageInfo.desc %></small></h1>
+    <ol class="breadcrumb">
+      <li><a href="/b"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">学生管理</a></li>
+      <li class="active"><%= pageInfo.title %></li>
+    </ol>
+  </section>
+  <% include ../layout/alertMessage.ejs %>
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-7">
+        <form action="/stu/update/add" id="addStudentForm">
+          <div class="box box-default box-solid">
+            <div class="box-header with-border">
+              <h3 class="box-title">单个添加</h3>
+            </div>
+            <div class="box-body">
+              <div class="row">
+                <div class="form-group col-lg-6">
+                  <label for="name">姓名<b class="text-danger">  *</b></label>
+                  <input type="text" name="name" placeholder="学生姓名" class="form-control" required maxlength="10">
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="gender">性别<b class="text-danger"> *</b></label>
+                  <div class="radio">
+                    <label class="radio-inline">
+                      <input type="radio" name="gender" value="男"> 男
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" checked name="gender" value="女"> 女
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-6 hide">
+                  <label for="stuid">学号</label>
+                  <input type="text" name="stuid" placeholder="" class="form-control" maxlength="10">
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="grade">年级</label>
+                  <select name="grade" class="form-control">
+                    <option value="1">一年级</option>
+                    <option value="2">二年级</option>
+                    <option value="3">三年级</option>
+                    <option value="4">四年级</option>
+                    <option value="5">五年级</option>
+                    <option value="6">六年级</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="class">班级</label>
+                  <input type="text" name="class" placeholder="填写数字" class="form-control" maxlength="2" number=ture>
+                </div>
+              </div>
+              <div class="row hide">
+                <div class="form-group col-lg-6">
+                  <label for="city">城市</label>
+                  <select name="city" class="form-control" readonly>
+                    <option value="北京市" selected>北京市</option>
+                  </select>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="district">区县</label>
+                  <select name="district" class="form-control" readonly>
+                    <option value="房山区" selected>房山区</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-6">
+                  <label for="street">街道</label>
+                  <select name="street" class="form-control" required></select>
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="road">道路</label>
+                  <input type="text" class="form-control" name="road" placeholder="道路地址" required maxlength="20">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-lg-6">
+                  <label for="uptown">小区</label>
+                  <input type="text" class="form-control" name="uptown" placeholder="小区名称" required maxlength="20">
+                </div>
+                <div class="form-group col-lg-6">
+                  <label for="door">门牌号（楼-单元-室）</label>
+                  <input type="text" class="form-control" name="door" placeholder="例如：1-1-101（1号楼1单元101室）" required maxlength="20">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="bz">备注信息</label>
+                <textarea class="form-control" name="bz" placeholder="其他信息备注" maxlength="200"></textarea>
+              </div>
+            </div>
+            <div class="box-footer">
+              <button type="reset" class="btn btn-default">重置</button>
+              <button type="submit" class="btn btn-primary">提交</button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-5">
+        <div class="box box-primary box-solid">
+          <div class="box-header with-border">
+            <h3 class="box-title">批量上传 <small><a href="/files/template_upload_student.xlsx">点击下载模版</a></small></h3>
+            <div class="box-tools pull-right">
+              <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+            <!-- /.box-tools -->
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <form method="POST" action="/stu/update/upload" enctype="multipart/form-data">
+              <div class="form-group">
+                <input type="file" name="file" id='orderFile'>
+              </div>
+              <!-- <button type="submit" name="submit" class="btn btn-primary btn-block">上传</button> -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- modal -->
+
+<% include ../layout/footer.ejs %>
+
+<!-- jquery.validate -->
+<script src="/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/jquery-validation/dist/localization/messages_zh.js"></script>
+<!-- bootstrap-fileinput -->
+<script src="/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="/bootstrap-fileinput/js/locales/zh.js"></script>
+
+<!-- custom -->
+<script src="/javascripts/bootstrap-table/renderTable.js"></script>
+<script src="/javascripts/validateForm.js"></script>
+<script src="/javascripts/gaodeAjaxApi.js"></script>
+
+<script>
+  $(function () {
+    validateForm('addStudentForm');
+    var $streetField = $('select[name=street]');
+    var district = $('select[name=district]').val();
+    getStreets(district, $streetField);
+
+    // 批量上传
+    $('#orderFile').fileinput({
+      language: 'zh',
+      // showPreview: false,
+      allowedFileExtensions: ['xlsx'],
+      // allowedFileTypes: ['xlsx'],
+      maxFileSize: 1024,
+      dropZoneTitle: '可拖拽文件到这里',
+      // initialCaption: '选择 模版',
+      browseLabel: '',
+      // showUpload: false,
+      // previewFileType: 'any'
+    });
+  });
+</script>
+
+<% include ../layout/foot.ejs %>

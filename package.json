@@ -1,0 +1,33 @@
+{
+  "name": "stu-info",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "DEBUG=stu-info:* NODE_ENV=dev supervisor -i views/,public/ ./bin/www",
+    "resetdb": "RESET_DB=yes NODE_ENV=dev node db/relation.js",
+    "init": "NODE_ENV=dev node db/init.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bower": "^1.8.8",
+    "config-lite": "^2.1.0",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "^4.1.1",
+    "ejs": "~2.5.7",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "formidable": "^1.2.1",
+    "md5": "^2.2.1",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
+    "node-xlsx": "^0.12.1",
+    "sequelize": "^5.2.8",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.16.0"
+  }
+}

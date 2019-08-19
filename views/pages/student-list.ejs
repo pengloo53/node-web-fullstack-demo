@@ -1,0 +1,124 @@
+<% include ../layout/head.ejs %>
+<!-- Bootstrap table -->
+<link rel="stylesheet" href="/bootstrap-table/dist/bootstrap-table.min.css">
+<!-- custom -->
+<link rel="stylesheet" href="/stylesheets/style.css">
+
+<% include ../layout/header.ejs %>
+<% include ../layout/sidebar.ejs %>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1><%= pageInfo.title %><small><%= pageInfo.desc %></small></h1>
+    <ol class="breadcrumb">
+      <li><a href="/b"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">学生管理</a></li>
+      <li class="active"><%= pageInfo.title %></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="box box-solid">
+          <div class="box-body">
+            <div id="toolbar">
+              <!-- <div class="btn-group" id="isBoeuFilter">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"> 数据筛选 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="javascript:void(0)" data-cate="all">全部讲师</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="javascript:void(0)" data-cate="boeu">BOEU讲师</a></li>
+                  <li><a href="javascript:void(0)" data-cate="boe">BOE非BOEU讲师</a></li>
+                  <li><a href="javascript:void(0)" data-cate="notboe">非BOE讲师</a></li>
+                </ul>
+              </div> -->
+              <!-- <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false"> 添加学生 <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#addInnerTeacherModal" data-toggle="modal">BOE内</a></li>
+                  <li><a href="#addOuterTeacherModal" data-toggle="modal">BOE外</a></li>
+                </ul> 
+              </div> -->
+              <a href="/b/student/add" class="btn btn-default btn-sm"><i class="fa fa-user-plus"></i> 添加</a>
+            </div>
+            <table id="studentTable"></table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- modal -->
+
+<% include ../layout/footer.ejs %>
+
+<!-- bootstrap-table -->
+<script src="/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script src="/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js"></script>
+<!-- bootstrap-table export -->
+<script src="/bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js"></script>
+<script src="/tableexport.jquery.plugin/tableExport.min.js"></script>
+
+<!-- jquery.validate -->
+<script src="/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="/jquery-validation/dist/localization/messages_zh.js"></script>
+
+<!-- custom -->
+<script src="/javascripts/bootstrap-table/renderTable.js"></script>
+<!-- <script src="/javascripts/pages/formValidateConfig.js"></script> -->
+
+<script>
+  $(function () {
+    var DEFAULT_CATE = 'all';
+    var select_cate = DEFAULT_CATE;
+    renderTable('studentTable');
+    // isBoeuFiler
+    $('#isBoeuFilter ul li a').click(function (e) {
+      select_cate = $(this).data('cate');
+      var text = $(this).text();
+      $('#isBoeuFilter button').text(text);
+      $table.bootstrapTable('refresh', {
+        query: {
+          cate: select_cate
+        }
+      });
+    });
+    // 表单验证
+    $('#addInnerTeacherForm').validate(validateConfig('addInnerTeacher', $table, { cate: select_cate }));
+    $('#addOuterTeacherForm').validate(validateConfig('addOuterTeacher', $table, { cate: select_cate }));
+    $('#editTeacherForm').validate(validateConfig('editTeacher', $table, { cate: select_cate }));
+
+    // 编辑 teacher
+    $('#editTeacherModal').on('show.bs.modal', function (e) {
+      var button = $(e.relatedTarget);
+      var id = button.data('id');
+      $.get('/ajax/teacher/info', { id: id }, function (result) {
+        $('#editTeacherForm input[name=id]').val(result.t_id);
+        $('#editTeacherForm input[name=userid]').val(result.t_userid);
+        $('#editTeacherForm input[name=name]').val(result.t_name);
+        $('#editTeacherForm input[name=coef]').val(result.t_coef);
+        $('#editTeacherForm input[name=payland]').val(result.t_payland);
+        $('#editTeacherForm input[name=place]').val(result.t_place);
+        $('#editTeacherForm input[name=phone]').val(result.t_phone);
+        $('#editTeacherForm input[name=email]').val(result.t_email);
+        $('#editTeacherForm select[name=is_boeu]').val(result.t_is_boeu);
+        $('#editTeacherForm input[name=address]').val(result.t_address);
+        $('#editTeacherForm textarea[name=bz]').val(result.t_bz);
+      });
+    });
+  });
+</script>
+
+<% include ../layout/foot.ejs %>

@@ -1,0 +1,28 @@
+<div class="row">
+  <% if( studentList.length === 0 ){ %>
+    <div class="text-center">
+        <span class="text-danger">没有匹配结果</span>
+    </div>
+  <% } %>
+  <% for(var i = 0 ; i < studentList.length ; i++){ %>
+    <div class="col-lg-4 col-md-6 col-xs-12">
+      <div class="box box-solid box-default">
+        <div class="box-header with-border">
+          <h3 class="box-title"><%= studentList[i].name %><small> <%= studentList[i].gender %></small></h3>
+          <% if(studentList[i].state == 1){ %>
+            <div class="box-tools pull-right">
+              <!-- btn btn-box-tool -->
+              <span class="" style="font-size: 12px;line-height: 2.5;padding: 5px;">已离校</span>
+            </div>
+          <% } %>
+        </div>
+        <div class="box-body no-padding">
+          <ul class="nav nav-stacked">
+            <li><a href="javascript:void(0)"><i class="fa fa-bookmark-o"></i>&nbsp; 班级：<b><%= studentList[i].class %></b></a></li>
+            <li><a href="javascript:void(0)"><i class="fa fa-pencil-square-o"></i>&nbsp; 入学时间：<b><%= studentList[i].enter_date %></b></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% } %>
+</div>

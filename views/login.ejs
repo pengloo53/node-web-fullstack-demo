@@ -1,0 +1,86 @@
+<% include ./layout/head.ejs %>
+</head>
+<body class="hold-transition login-page">
+  <div class="container-fluid">
+    <div class="row">
+      <% include ./layout/alertMessage.ejs %>
+    </div>
+  </div>
+<div class="login-box">
+  <div class="login-logo">
+    <a href="/" title="<%= web.desc %>"><b><%= web.title %> </b><%= web.name %></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="login-box-body">
+    <p class="login-box-msg">使用<b> 邮箱 </b>或者<b> 用户ID </b>登陆</p>
+    <form action="/login" method="post" id="loginForm">
+      <div class="form-group has-feedback">
+        <input type="text" class="form-control" name="username" placeholder="Email or Userid" required="true">
+        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" name="password" placeholder="Password" required="true">
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group">
+        <% if(web.verifier == 1){ %>
+          <a href="#" class="btn btn-primary btn-block btn-flat" id="TencentCaptcha" data-appid="2100000562" data-cbfn="callback">Log in</a>
+        <% }else{ %>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">登陆</button>
+        <% } %>
+      </div>
+    </form>
+    <!-- <a href="#">I forgot my password</a><br> -->
+    <% if(web.register == 1 ){ %>
+      没有账号？<a href="/register" class="text-center">注册</a>
+    <% } %>
+  </div>
+  <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery 3 -->
+<script src="/jquery/dist/jquery.min.js"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- 验证码 -->
+<% if (web.verifier == 1) { %>
+<script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+<script>
+  window.callback = function(res){
+    if(res.ret === 0){
+        $.ajax({
+          url: '/login/verify',
+          method: 'POST',
+          data: {
+            Ticket : res.ticket,
+            Randstr :  res.randstr,
+          },
+          success: function(result){
+             if(result.code == 0){
+                $('#loginForm').submit();
+             }
+          }
+        });
+    }
+  };
+</script>
+<% } %>
+
+<!-- md5 -->
+<script src="/js-md5/js/md5.min.js"></script>
+<script>
+  $(function(){
+    $('#loginForm').submit(function(e){
+      // e.preventDefault();
+      var email = $('input[name=email]').val();
+      var password = $('input[name=password]').val();
+      var passwd = md5(password);
+      $('input[name=password]').val(passwd);
+      return true;
+    });
+  });
+</script>
+
+<% include ./layout/foot.ejs %>
